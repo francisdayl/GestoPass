@@ -1,2 +1,2 @@
 # GestoPass
-Gestor de Contraseñas - Password Manager
+Gestor de contraseñas
