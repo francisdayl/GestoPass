@@ -26,7 +26,7 @@ def get_F():
 
 def gen_key_pass(clave):
     password = clave.encode() 
-    salt = b'P\xa2\x12\xa8\xfd\x9aY\xf5\xe15\xec\xea\xcaEpG'
+    salt = b'P\xa2\x12\xa8\xfd\x9aY\xf5\xe15\xec\xea\xcaEpG'#Aqui pueden poner otro codigo para la generacion del key
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
@@ -56,7 +56,9 @@ def cargar_db():
 def guardar_act_db(dic):
     F = get_F()
     dic_enc = F.encrypt(str(dic).encode())
-    open("dats.xd","wb").write(dic_enc)
+    arch = open("dats.xd","wb")
+    arch.write(dic_enc)
+    arch.close()
     return None
 
 def cargar_tmp():
@@ -78,7 +80,9 @@ def actualizar_tmp(dic):
     F_pas = Fernet(gen_key_pass(dic["password"]))
     dic["info"]=F_pas.encrypt(str(info_tmp).encode()).decode()
     F = get_F()
-    open("temp.xd","wb").write(F.encrypt(str(dic).encode()))
+    arch = open("temp.xd","wb")
+    arch.write(F.encrypt(str(dic).encode()))
+    arch.close()
 
 def actualizar_con_tmp():
     archi = open("temp.xd","rb")
@@ -157,7 +161,9 @@ def get_time_dif(last_date,actual_date = time.localtime()):
 def exportar(ruta):
     db_exp = cargar_tmp()
     F_pas = Fernet(gen_key_pass(db_exp["password"]))
-    open(ruta,"wb").write(F_pas.encrypt(str(db_exp).encode()))
+    arch  = open(ruta,"wb")
+    arch.write(F_pas.encrypt(str(db_exp).encode()))
+    arch.close()
 
 def importacion(ruta,clave):
     msj_err = "Archivo Denegado"
@@ -216,7 +222,9 @@ def valid_usupass(usu,contra):
         dic_us["pre_ult_acces"]=dic_us["ult_acces"]
         dic_us["ult_acces"]=get_tiempo_actual()
         dic_us["intentos"]=0
-        open("temp.xd","wb").write(F.encrypt(str(dic_us).encode()))
+        arch = open("temp.xd","wb")
+        arch.write(F.encrypt(str(dic_us).encode()))
+        arch.close()
         log_last_user(usu)
         actualizar_con_tmp()
         return True

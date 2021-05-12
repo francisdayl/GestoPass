@@ -473,17 +473,6 @@ class Ui_Seleccion_Cuenta(object):
 
 
 
-     
-
-
-        
-        
-
-
-
-    
-
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
